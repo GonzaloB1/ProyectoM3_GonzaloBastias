@@ -1,4 +1,4 @@
-import { renderChatView } from './chat.js';
+import { renderChatView, initChatView } from './chat.js';
 
 const appElement = document.getElementById('app');
 
@@ -39,16 +39,18 @@ function renderAboutView() {
 }
 
 const routes = {
-  '/home': renderHomeView,
-  '/chat': renderChatView,
-  '/about': renderAboutView,
+  '/home': { render: renderHomeView },
+  '/chat': { render: renderChatView, init: initChatView },
+  '/about': { render: renderAboutView },
 };
 
 function router() {
   const path = window.location.pathname === '/' ? '/home' : window.location.pathname;
-  const renderView = routes[path] || renderHomeView;
+  const route = routes[path] || routes['/home'];
 
-  appElement.innerHTML = renderNav(path) + renderView();
+  appElement.innerHTML = renderNav(path) + route.render();
+
+  if (route.init) route.init();
 }
 
 function navigateTo(path) {
