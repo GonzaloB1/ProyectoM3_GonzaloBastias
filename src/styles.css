@@ -86,3 +86,39 @@ body {
   font-weight: 600;
   cursor: pointer;
 }
+
+/* Tablet */
+@media (min-width: 768px) {
+  #app {
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .chat-header {
+    padding: var(--spacing-md) calc(var(--spacing-md) * 1.5);
+  }
+
+  .message {
+    max-width: 65%;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  #app {
+    max-width: 800px;
+    height: 90vh;
+    margin: 5vh auto;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .chat-messages {
+    padding: calc(var(--spacing-md) * 1.5);
+  }
+
+  .message {
+    max-width: 55%;
+  }
+}
