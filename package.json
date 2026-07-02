@@ -4,7 +4,6 @@
   "description": "SPA para chatear con personajes ficticios usando Gemini AI",
   "type": "module",
   "scripts": {
-    "dev": "vercel dev",
     "test": "vitest run"
   },
   "devDependencies": {
