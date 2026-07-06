@@ -2,7 +2,7 @@ import { createMessage, buildMessageHtml } from './utils.js';
 import { getCharacterById } from './characters.js';
 
 let messages = [];
-let currentCharacterId = 'homero';
+let currentCharacterId = localStorage.getItem('currentCharacterId') || 'homero';
 
 function getCharacter() {
   return getCharacterById(currentCharacterId);
@@ -30,6 +30,7 @@ function loadMessages() {
 
 export function setCurrentCharacter(characterId) {
   currentCharacterId = characterId;
+  localStorage.setItem('currentCharacterId', characterId);
   const savedMessages = loadMessages();
   messages = savedMessages && savedMessages.length > 0
     ? savedMessages
