@@ -142,3 +142,35 @@ body {
 .view {
   padding: var(--spacing-md);
 }
+
+.character-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+}
+
+.character-card {
+  padding: var(--spacing-md);
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  background-color: white;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.2s ease;
+}
+
+.character-card:hover {
+  border-color: var(--color-user-bubble);
+}
+
+.character-card__name {
+  font-size: 1rem;
+  color: var(--color-text-dark);
+}
+
+@media (min-width: 768px) {
+  .character-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

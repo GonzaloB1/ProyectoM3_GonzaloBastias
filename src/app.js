@@ -1,10 +1,12 @@
-import { renderChatView, initChatView } from './chat.js';
+import { renderChatView, initChatView, setCurrentCharacter } from './chat.js';
+import { characters } from './characters.js';
 
 const appElement = document.getElementById('app');
 
 function renderNav(activePath) {
   const links = [
     { path: '/home', label: 'Home' },
+    { path: '/gallery', label: 'Personajes' },
     { path: '/chat', label: 'Chat' },
     { path: '/about', label: 'About' },
   ];
@@ -22,11 +24,41 @@ function renderNav(activePath) {
 function renderHomeView() {
   return `
     <section class="view view--home">
-      <h1>Chateá con Homero Simpson</h1>
-      <p>Charlá con tu personaje favorito de Los Simpson, potenciado por inteligencia artificial.</p>
-      <a href="/chat" class="cta-button" data-link>Empezar a chatear</a>
+      <h1>Chateá con tu personaje favorito</h1>
+      <p>Elegí entre 8 personajes distintos y empezá una conversación potenciada por inteligencia artificial.</p>
+      <a href="/gallery" class="cta-button" data-link>Elegir personaje</a>
     </section>
   `;
+}
+
+function renderGalleryView() {
+  const cardsHtml = Object.values(characters)
+    .map(
+      (character) => `
+        <button class="character-card" data-character-id="${character.id}">
+          <h3 class="character-card__name">${character.name}</h3>
+        </button>
+      `
+    )
+    .join('');
+
+  return `
+    <section class="view view--gallery">
+      <h2>Elegí tu personaje</h2>
+      <div class="character-grid">${cardsHtml}</div>
+    </section>
+  `;
+}
+
+function initGalleryView() {
+  const cards = document.querySelectorAll('.character-card');
+  cards.forEach((card) => {
+    card.addEventListener('click', () => {
+      const characterId = card.getAttribute('data-character-id');
+      setCurrentCharacter(characterId);
+      navigateTo('/chat');
+    });
+  });
 }
 
 function renderAboutView() {
@@ -40,6 +72,7 @@ function renderAboutView() {
 
 const routes = {
   '/home': { render: renderHomeView },
+  '/gallery': { render: renderGalleryView, init: initGalleryView },
   '/chat': { render: renderChatView, init: initChatView },
   '/about': { render: renderAboutView },
 };
