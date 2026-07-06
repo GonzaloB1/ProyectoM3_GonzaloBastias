@@ -8,20 +8,47 @@ function getCharacter() {
   return getCharacterById(currentCharacterId);
 }
 
+function getStorageKey() {
+  return `chat-history-${currentCharacterId}`;
+}
+
+function saveMessages() {
+  localStorage.setItem(getStorageKey(), JSON.stringify(messages));
+}
+
+function loadMessages() {
+  const saved = localStorage.getItem(getStorageKey());
+  if (saved) {
+    try {
+      return JSON.parse(saved);
+    } catch {
+      return null;
+    }
+  }
+  return null;
+}
+
 export function setCurrentCharacter(characterId) {
   currentCharacterId = characterId;
-  messages = [createMessage('character', getCharacter().greeting)];
+  const savedMessages = loadMessages();
+  messages = savedMessages && savedMessages.length > 0
+    ? savedMessages
+    : [createMessage('character', getCharacter().greeting)];
 }
 
 export function renderChatView() {
   if (messages.length === 0) {
-    messages = [createMessage('character', getCharacter().greeting)];
+    const savedMessages = loadMessages();
+    messages = savedMessages && savedMessages.length > 0
+      ? savedMessages
+      : [createMessage('character', getCharacter().greeting)];
   }
 
   return `
     <div class="chat-container">
       <header class="chat-header">
         <h1 class="character-name">${getCharacter().name}</h1>
+        <button class="clear-history-button" id="clearHistoryButton" title="Borrar historial">🗑️</button>
       </header>
 
       <main class="chat-messages" id="chatMessages"></main>
@@ -68,11 +95,21 @@ export function initChatView() {
   const typingIndicator = document.getElementById('typingIndicator');
   const form = document.getElementById('chatForm');
   const input = document.getElementById('messageInput');
+  const clearButton = document.getElementById('clearHistoryButton');
 
   function renderMessages() {
     messagesContainer.innerHTML = messages.map(buildMessageHtml).join('');
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
   }
+
+  clearButton.addEventListener('click', () => {
+    const confirmed = confirm('¿Borrar todo el historial de esta conversación?');
+    if (!confirmed) return;
+
+    messages = [createMessage('character', getCharacter().greeting)];
+    saveMessages();
+    renderMessages();
+  });
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -80,6 +117,7 @@ export function initChatView() {
     if (!text) return;
 
     messages.push(createMessage('user', text));
+    saveMessages();
     input.value = '';
     renderMessages();
 
@@ -89,6 +127,7 @@ export function initChatView() {
     try {
       const reply = await fetchCharacterReply();
       messages.push(createMessage('character', reply));
+      saveMessages();
     } catch (error) {
       console.error(error);
       messages.push(createMessage('character', 'Ups, algo salió mal. Probá de nuevo en un momento.'));
