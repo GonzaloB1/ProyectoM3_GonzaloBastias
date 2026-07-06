@@ -4,8 +4,20 @@
   --color-character-bubble: #e5e5ea;
   --color-text-light: #ffffff;
   --color-text-dark: #1c1c1e;
+  --color-surface: #ffffff;
+  --color-header-bg: #1c1c1e;
   --spacing-sm: 8px;
   --spacing-md: 16px;
+}
+
+[data-theme='dark'] {
+  --color-bg: #2b2d31;
+  --color-user-bubble: #0b6fd1;
+  --color-character-bubble: #3a3b40;
+  --color-text-light: #f0f0f0;
+  --color-text-dark: #f0f0f0;
+  --color-surface: #2c2d31;
+  --color-header-bg: #000000;
 }
 
 * {
@@ -17,7 +29,9 @@
 body {
   font-family: system-ui, -apple-system, sans-serif;
   background-color: var(--color-bg);
+  color: var(--color-text-dark);
   height: 100vh;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 #app {
@@ -28,7 +42,7 @@ body {
 
 .chat-header {
   padding: var(--spacing-md);
-  background-color: var(--color-text-dark);
+  background-color:  var(--color-header-bg);
   color: var(--color-text-light);
   text-align: center;
 }
@@ -65,7 +79,7 @@ body {
   display: flex;
   padding: var(--spacing-md);
   gap: var(--spacing-sm);
-  background-color: white;
+  background-color: var(--color-surface);
   border-top: 1px solid #ddd;
 }
 
@@ -126,7 +140,7 @@ body {
   display: flex;
   gap: var(--spacing-md);
   padding: var(--spacing-md);
-  background-color: var(--color-text-dark);
+  background-color: var(--color-header-bg);
 }
 
 .nav-link {
@@ -154,7 +168,7 @@ body {
   padding: var(--spacing-md);
   border: 2px solid #ddd;
   border-radius: 12px;
-  background-color: white;
+  background-color: var(--color-surface);
   cursor: pointer;
   text-align: center;
   transition: border-color 0.2s ease;
@@ -230,4 +244,12 @@ body {
 @keyframes typing-bounce {
   0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
   40% { transform: scale(1); opacity: 1; }
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-left: auto;
 }

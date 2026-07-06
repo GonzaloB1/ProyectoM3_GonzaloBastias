@@ -18,7 +18,12 @@ function renderNav(activePath) {
     })
     .join('');
 
-  return `<nav class="app-nav">${linksHtml}</nav>`;
+  return `
+    <nav class="app-nav">
+      ${linksHtml}
+      <button id="themeToggle" class="theme-toggle" title="Cambiar tema">🌙</button>
+    </nav>
+  `;
 }
 
 function renderHomeView() {
@@ -70,6 +75,27 @@ function renderAboutView() {
   `;
 }
 
+function applyStoredTheme() {
+  const storedTheme = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', storedTheme);
+}
+
+function setupThemeToggle() {
+  const button = document.getElementById('themeToggle');
+  if (!button) return;
+
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+  button.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+
+  button.addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const newTheme = isDark ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    button.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+  });
+}
+
 const routes = {
   '/home': { render: renderHomeView },
   '/gallery': { render: renderGalleryView, init: initGalleryView },
@@ -82,7 +108,8 @@ function router() {
   const route = routes[path] || routes['/home'];
 
   appElement.innerHTML = renderNav(path) + route.render();
-
+ 
+  setupThemeToggle();
   if (route.init) route.init();
 }
 
@@ -101,4 +128,5 @@ document.addEventListener('click', (event) => {
 
 window.addEventListener('popstate', router);
 
+applyStoredTheme();
 router();
