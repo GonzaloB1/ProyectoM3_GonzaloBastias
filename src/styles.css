@@ -180,6 +180,17 @@ body {
   justify-content: space-between;
   align-items: center;
 }
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.chat-messages {
+  min-height: 0;
+}
 
 .clear-history-button {
   background: none;
