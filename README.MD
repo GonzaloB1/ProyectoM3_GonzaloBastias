@@ -30,6 +30,9 @@ Proyecto 3. Single Page Application que permite chatear con 8 personajes fictici
 - Indicador animado de "escribiendo..."
 - Envío de mensajes con Enter o con el botón
 - Modo oscuro/claro con preferencia persistente
+- Imágenes ilustrativas para cada personaje en la galería
+
+
 
 ## 🛠️ Stack técnico
 
@@ -115,7 +118,9 @@ Durante el desarrollo de este proyecto usé Claude (Anthropic) como asistente de
   - Pérdida del personaje activo al recargar la página (no se persistía `currentCharacterId`, solo los mensajes).
   - Contraste roto en modo oscuro: variables CSS reutilizadas con doble propósito (texto y fondo) se invertían juntas, dejando texto invisible sobre fondos del mismo tono.
 - **Migraciones de modelo de Gemini**: durante el desarrollo, `gemini-2.0-flash` fue dado de baja por Google; luego se migró de `gemini-2.5-flash` a `gemini-3.1-flash-lite` por límites de cuota gratuita, verificando cada cambio con búsquedas de documentación oficial actualizada antes de aplicarlo.
+- Error de sintaxis en `characters.js` (coma faltante entre objetos del diccionario de personajes) tras agregar el campo `image` a cada uno.
 - **Decisiones propias**: la elección de los 8 personajes, sus personalidades específicas, y qué extras priorizar fueron decisiones mías; la IA ayudó a redactar los `system prompts` en base a los rasgos que definí para cada personaje.
+
 
 ## 👤 Autor
 

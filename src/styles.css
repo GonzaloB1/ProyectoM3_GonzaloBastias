@@ -37,7 +37,7 @@ body {
 #app {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .chat-header {
@@ -120,13 +120,12 @@ body {
 
 /* Desktop */
 @media (min-width: 1024px) {
-  #app {
-    max-width: 800px;
-    height: 90vh;
-    margin: 5vh auto;
-    border-radius: 12px;
-    overflow: hidden;
-  }
+ #app {
+  max-width: 800px;
+  min-height: 100vh;
+  margin: 5vh auto;
+  border-radius: 12px;
+}
 
   .chat-messages {
     padding: calc(var(--spacing-md) * 1.5);
