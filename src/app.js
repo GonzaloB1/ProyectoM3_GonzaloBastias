@@ -41,6 +41,7 @@ function renderGalleryView() {
     .map(
       (character) => `
         <button class="character-card" data-character-id="${character.id}">
+          <img src="${character.image}" alt="${character.name}" class="character-card__image" />
           <h3 class="character-card__name">${character.name}</h3>
         </button>
       `
@@ -70,7 +71,7 @@ function renderAboutView() {
   return `
     <section class="view view--about">
       <h2>Sobre este proyecto</h2>
-      <p>Proyecto Integrador 3 de Henry: una SPA que integra la API de Google Gemini para simular conversaciones con personajes ficticios.</p>
+      <p>Es una SPA que integra la API de Google Gemini para simular conversaciones con personajes ficticios.</p>
     </section>
   `;
 }
