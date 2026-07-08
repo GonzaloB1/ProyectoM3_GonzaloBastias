@@ -94,22 +94,24 @@ Esto ejecuta 11 tests unitarios con Vitest sobre las funciones utilitarias (`src
 ## 📸 Capturas de pantalla
 
 ### Home
-![Home](screenshots/home.png)
+![Home](assets/characters/home.png)
 
 ### Galería de personajes - Modo claro
-![Galería modo claro](screenshots/galeria-claro.png)
+![Galería modo claro](assets/characters/galeria-claro.png)
 
 ### Galería de personajes - Modo oscuro
-![Galería modo oscuro](screenshots/galeria-oscuro.png)
+![Galería modo oscuro](assets/characters/galeria-oscuro.png)
 
 ### Chat - Modo claro
-![Chat modo claro](screenshots/chat-claro.png)
+![Chat modo claro](assets/characters/chat-claro.png)
 
 ### Chat - Modo oscuro
-![Chat modo oscuro](screenshots/chat-oscuro.png)
+![Chat modo oscuro](assets/characters/chat-oscuro.png)
 
 ### Vista mobile
-![Vista mobile](screenshots/celular.jpg)
+![Vista mobile](assets/characters/celular.jpg)
+
+
 ## 🤖 Registro de uso de IA
 
 Durante el desarrollo de este proyecto usé Claude (Anthropic) como asistente de aprendizaje guiado, etapa por etapa. Un resumen de cómo se usó:
