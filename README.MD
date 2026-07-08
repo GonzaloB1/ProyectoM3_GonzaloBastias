@@ -110,7 +110,6 @@ Esto ejecuta 11 tests unitarios con Vitest sobre las funciones utilitarias (`src
 
 ### Vista mobile
 ![Vista mobile](screenshots/celular.jpg)
-
 ## 🤖 Registro de uso de IA
 
 Durante el desarrollo de este proyecto usé Claude (Anthropic) como asistente de aprendizaje guiado, etapa por etapa. Un resumen de cómo se usó:
