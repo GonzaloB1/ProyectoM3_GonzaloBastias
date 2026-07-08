@@ -319,3 +319,64 @@ body {
 .character-selector__avatar--active {
   transform: scale(1.1);
 }
+
+.chat-header__actions {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.info-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.character-info-panel {
+  background-color: var(--color-surface);
+  border-bottom: 1px solid #ddd;
+}
+
+.character-info-panel[hidden] {
+  display: none;
+}
+
+.character-info-panel__header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  color: white;
+}
+
+.character-info-panel__avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+}
+
+.character-info-panel__header h3 {
+  margin-bottom: 2px;
+}
+
+.character-info-panel__header span {
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.character-info-panel__traits {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+}
+
+.character-info-panel__traits li {
+  background-color: var(--color-bg);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+}

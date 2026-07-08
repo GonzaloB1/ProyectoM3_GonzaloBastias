@@ -73,10 +73,26 @@ export function renderChatView() {
     <div class="chat-container">
       <header class="chat-header">
         <h1 class="character-name">${getCharacter().name}</h1>
-        <button class="clear-history-button" id="clearHistoryButton" title="Borrar historial">🗑️</button>
+        <div class="chat-header__actions">
+          <button class="info-button" id="infoButton" title="Info del personaje">ℹ️</button>
+          <button class="clear-history-button" id="clearHistoryButton" title="Borrar historial">🗑️</button>
+        </div>
       </header>
 
       <div class="character-selector" id="characterSelector">${selectorHtml}</div>
+
+      <div class="character-info-panel" id="characterInfoPanel" hidden>
+        <div class="character-info-panel__header" style="background-color: ${getCharacter().color}">
+          <img src="${getCharacter().image}" alt="${getCharacter().name}" class="character-info-panel__avatar" />
+          <div>
+            <h3>${getCharacter().name}</h3>
+            <span>${getCharacter().franchise}</span>
+          </div>
+        </div>
+        <ul class="character-info-panel__traits">
+          ${getCharacter().traits.map((trait) => `<li>${trait}</li>`).join('')}
+        </ul>
+      </div>
 
       <main class="chat-messages" id="chatMessages"></main>
 
@@ -125,10 +141,28 @@ export function initChatView() {
   const clearButton = document.getElementById('clearHistoryButton');
   const characterNameEl = document.querySelector('.character-name');
   const selectorButtons = document.querySelectorAll('.character-selector__avatar');
+  const infoButton = document.getElementById('infoButton');
+  const infoPanel = document.getElementById('characterInfoPanel');
 
   function renderMessages() {
     messagesContainer.innerHTML = messages.map(buildMessageHtml).join('');
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+
+  function renderInfoPanel() {
+    const character = getCharacter();
+    infoPanel.innerHTML = `
+      <div class="character-info-panel__header" style="background-color: ${character.color}">
+        <img src="${character.image}" alt="${character.name}" class="character-info-panel__avatar" />
+        <div>
+          <h3>${character.name}</h3>
+          <span>${character.franchise}</span>
+        </div>
+      </div>
+      <ul class="character-info-panel__traits">
+        ${character.traits.map((trait) => `<li>${trait}</li>`).join('')}
+      </ul>
+    `;
   }
 
   function switchCharacter(characterId) {
@@ -136,6 +170,7 @@ export function initChatView() {
 
     setCurrentCharacter(characterId);
     characterNameEl.textContent = getCharacter().name;
+    renderInfoPanel();
 
     selectorButtons.forEach((button) => {
       const isActive = button.getAttribute('data-character-id') === characterId;
@@ -151,6 +186,10 @@ export function initChatView() {
     button.addEventListener('click', () => {
       switchCharacter(button.getAttribute('data-character-id'));
     });
+  });
+
+  infoButton.addEventListener('click', () => {
+    infoPanel.hidden = !infoPanel.hidden;
   });
 
   clearButton.addEventListener('click', () => {
