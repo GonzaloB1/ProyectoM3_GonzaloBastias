@@ -106,7 +106,7 @@ Esto ejecuta 11 tests unitarios con Vitest sobre las funciones utilitarias (`src
 ![Chat modo claro](src/assets/characters/chat-claro.png)
 
 ### Chat - Modo oscuro
-![Chat modo oscuro](src/ssets/characters/chat-oscuro.png)
+![Chat modo oscuro](src/assets/characters/chat-oscuro.png)
 
 ### Vista mobile
 ![Vista mobile](src/assets/characters/celular.jpg)
