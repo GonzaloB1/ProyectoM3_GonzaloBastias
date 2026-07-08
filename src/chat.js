@@ -216,7 +216,7 @@ export function initChatView() {
 
     try {
       const reply = await fetchCharacterReply();
-      messages.push(createMessage('character', reply));
+      messages.push(createMessage('assistant', reply));
       saveMessages();
     } catch (error) {
       console.error(error);
