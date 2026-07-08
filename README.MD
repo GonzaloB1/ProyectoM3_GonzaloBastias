@@ -94,22 +94,22 @@ Esto ejecuta 11 tests unitarios con Vitest sobre las funciones utilitarias (`src
 ## 📸 Capturas de pantalla
 
 ### Home
-![Home](assets/characters/home.png)
+![Home](src/assets/characters/home.png)
 
 ### Galería de personajes - Modo claro
-![Galería modo claro](assets/characters/galeria-claro.png)
+![Galería modo claro](src/assets/characters/galeria-claro.png)
 
 ### Galería de personajes - Modo oscuro
-![Galería modo oscuro](assets/characters/galeria-oscuro.png)
+![Galería modo oscuro](src/assets/characters/galeria-oscuro.png)
 
 ### Chat - Modo claro
-![Chat modo claro](assets/characters/chat-claro.png)
+![Chat modo claro](src/assets/characters/chat-claro.png)
 
 ### Chat - Modo oscuro
-![Chat modo oscuro](assets/characters/chat-oscuro.png)
+![Chat modo oscuro](src/ssets/characters/chat-oscuro.png)
 
 ### Vista mobile
-![Vista mobile](assets/characters/celular.jpg)
+![Vista mobile](src/assets/characters/celular.jpg)
 
 
 ## 🤖 Registro de uso de IA
