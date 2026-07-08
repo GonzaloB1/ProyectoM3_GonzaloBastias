@@ -1,5 +1,5 @@
 import { createMessage, buildMessageHtml } from './utils.js';
-import { getCharacterById } from './characters.js';
+import { characters, getCharacterById } from './characters.js';
 
 let messages = [];
 let currentCharacterId = localStorage.getItem('currentCharacterId') || 'homero';
@@ -10,6 +10,10 @@ function getCharacter() {
 
 function getStorageKey() {
   return `chat-history-${currentCharacterId}`;
+}
+
+function applyCharacterAccent() {
+  document.documentElement.style.setProperty('--character-accent', getCharacter().color);
 }
 
 function saveMessages() {
@@ -31,6 +35,7 @@ function loadMessages() {
 export function setCurrentCharacter(characterId) {
   currentCharacterId = characterId;
   localStorage.setItem('currentCharacterId', characterId);
+  applyCharacterAccent();
   const savedMessages = loadMessages();
   messages = savedMessages && savedMessages.length > 0
     ? savedMessages
@@ -38,6 +43,8 @@ export function setCurrentCharacter(characterId) {
 }
 
 export function renderChatView() {
+  applyCharacterAccent();
+
   if (messages.length === 0) {
     const savedMessages = loadMessages();
     messages = savedMessages && savedMessages.length > 0
@@ -45,12 +52,31 @@ export function renderChatView() {
       : [createMessage('character', getCharacter().greeting)];
   }
 
+  const selectorHtml = Object.values(characters)
+    .map((character) => {
+      const activeClass = character.id === currentCharacterId ? 'character-selector__avatar--active' : '';
+      const borderColor = character.id === currentCharacterId ? character.color : 'transparent';
+      return `
+        <button
+          class="character-selector__avatar ${activeClass}"
+          data-character-id="${character.id}"
+          style="border-color: ${borderColor}"
+          title="${character.name}"
+        >
+          <img src="${character.image}" alt="${character.name}" />
+        </button>
+      `;
+    })
+    .join('');
+
   return `
     <div class="chat-container">
       <header class="chat-header">
         <h1 class="character-name">${getCharacter().name}</h1>
         <button class="clear-history-button" id="clearHistoryButton" title="Borrar historial">🗑️</button>
       </header>
+
+      <div class="character-selector" id="characterSelector">${selectorHtml}</div>
 
       <main class="chat-messages" id="chatMessages"></main>
 
@@ -97,11 +123,35 @@ export function initChatView() {
   const form = document.getElementById('chatForm');
   const input = document.getElementById('messageInput');
   const clearButton = document.getElementById('clearHistoryButton');
+  const characterNameEl = document.querySelector('.character-name');
+  const selectorButtons = document.querySelectorAll('.character-selector__avatar');
 
   function renderMessages() {
     messagesContainer.innerHTML = messages.map(buildMessageHtml).join('');
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
   }
+
+  function switchCharacter(characterId) {
+    if (characterId === currentCharacterId) return;
+
+    setCurrentCharacter(characterId);
+    characterNameEl.textContent = getCharacter().name;
+
+    selectorButtons.forEach((button) => {
+      const isActive = button.getAttribute('data-character-id') === characterId;
+      button.classList.toggle('character-selector__avatar--active', isActive);
+      button.style.borderColor = isActive ? getCharacter().color : 'transparent';
+    });
+
+    renderMessages();
+    input.focus();
+  }
+
+  selectorButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      switchCharacter(button.getAttribute('data-character-id'));
+    });
+  });
 
   clearButton.addEventListener('click', () => {
     const confirmed = confirm('¿Borrar todo el historial de esta conversación?');

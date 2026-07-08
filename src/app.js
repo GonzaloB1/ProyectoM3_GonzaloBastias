@@ -40,7 +40,7 @@ function renderGalleryView() {
   const cardsHtml = Object.values(characters)
     .map(
       (character) => `
-        <button class="character-card" data-character-id="${character.id}">
+        <button class="character-card" data-character-id="${character.id}" style="border-color: ${character.color}">
           <img src="${character.image}" alt="${character.name}" class="character-card__image" />
           <h3 class="character-card__name">${character.name}</h3>
         </button>
@@ -70,8 +70,14 @@ function initGalleryView() {
 function renderAboutView() {
   return `
     <section class="view view--about">
-      <h2>Sobre este proyecto</h2>
-      <p>Es una SPA que integra la API de Google Gemini para simular conversaciones con personajes ficticios.</p>
+      <h2>¿De qué trata este proyecto?</h2>
+      <p>Esta es una Single Page Application que permite chatear con 8 personajes ficticios de distintas franquicias, cada uno potenciado por la API de Google Gemini.</p>
+      <p>En lugar de hablar con una inteligencia artificial genérica, el usuario puede elegir con quién conversar: desde Homero Simpson hasta Gojo Satoru, pasando por los Piratas de Sombrero de Paja y los cazadores de demonios de Kimetsu no Yaiba.</p>
+      <p>Cada personaje cuenta con un system prompt diseñado especialmente para definir su forma de hablar, su personalidad y sus límites, permitiendo que una misma pregunta reciba respuestas completamente distintas según el personaje elegido.</p>
+      <h3>¿Cómo funciona?</h3>
+      <p>Cada mensaje que enviás viaja junto con todo el historial de la conversación hacia una función serverless en Vercel, que actúa como intermediaria segura entre la aplicación y Gemini AI — así, la clave de la API nunca queda expuesta en el navegador.</p>
+      <h3>Sobre este proyecto</h3>
+      <p>Fue desarrollado como Proyecto, aplicando routing SPA con History API, diseño responsive mobile-first, testing con Vitest, y despliegue en Vercel.</p>
     </section>
   `;
 }
@@ -109,7 +115,8 @@ function router() {
   const route = routes[path] || routes['/home'];
 
   appElement.innerHTML = renderNav(path) + route.render();
- 
+  appElement.classList.toggle('app--fixed-height', path === '/chat');
+
   setupThemeToggle();
   if (route.init) route.init();
 }

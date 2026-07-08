@@ -40,6 +40,10 @@ body {
   min-height: 100vh;
 }
 
+#app.app--fixed-height {
+  height: 100vh;
+  overflow: hidden;
+}
 .chat-header {
   padding: var(--spacing-md);
   background-color:  var(--color-header-bg);
@@ -65,7 +69,7 @@ body {
 
 .message--user {
   align-self: flex-end;
-  background-color: var(--color-user-bubble);
+  background-color: var(--character-accent, var(--color-user-bubble));
   color: var(--color-text-light);
 }
 
@@ -95,7 +99,7 @@ body {
   padding: var(--spacing-sm) var(--spacing-md);
   border: none;
   border-radius: 20px;
-  background-color: var(--color-user-bubble);
+  background-color: var(--character-accent, var(--color-user-bubble));
   color: var(--color-text-light);
   font-weight: 600;
   cursor: pointer;
@@ -120,12 +124,17 @@ body {
 
 /* Desktop */
 @media (min-width: 1024px) {
- #app {
-  max-width: 800px;
-  min-height: 100vh;
-  margin: 5vh auto;
-  border-radius: 12px;
-}
+  #app {
+    max-width: 800px;
+    min-height: 90vh;
+    margin: 5vh auto;
+    border-radius: 12px;
+  }
+
+  #app.app--fixed-height {
+    height: 90vh;
+    overflow: hidden;
+  }
 
   .chat-messages {
     padding: calc(var(--spacing-md) * 1.5);
@@ -259,4 +268,54 @@ body {
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: var(--spacing-sm);
+}
+
+.view--about h2 {
+  margin-bottom: var(--spacing-md);
+}
+
+.view--about h3 {
+  margin-top: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+}
+
+.view--about p {
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.6;
+}
+
+.character-selector {
+  display: flex;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  overflow-x: auto;
+  background-color: var(--color-surface);
+  border-bottom: 1px solid #ddd;
+}
+
+.character-selector__avatar {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  padding: 2px;
+  background: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.15s ease;
+}
+
+.character-selector__avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.character-selector__avatar:hover {
+  transform: scale(1.08);
+}
+
+.character-selector__avatar--active {
+  transform: scale(1.1);
 }
