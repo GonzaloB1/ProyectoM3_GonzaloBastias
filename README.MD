@@ -31,6 +31,10 @@ Proyecto 3. Single Page Application que permite chatear con 8 personajes fictici
 - Envío de mensajes con Enter o con el botón
 - Modo oscuro/claro con preferencia persistente
 - Imágenes ilustrativas para cada personaje en la galería
+- Selector rápido de personajes dentro del chat (sin volver a la galería)
+- Panel de información del personaje (franquicia y rasgos de personalidad)
+- Color de acento distinto por personaje (burbujas, botones, anillos del carrusel)
+- Home con hero animado y carrusel de personajes ("Portal de Personajes")
 
 
 
@@ -90,19 +94,22 @@ Esto ejecuta 11 tests unitarios con Vitest sobre las funciones utilitarias (`src
 ## 📸 Capturas de pantalla
 
 ### Home
+![Home](screenshots/home.png)
 
+### Galería de personajes - Modo claro
+![Galería modo claro](screenshots/galeria-claro.png)
 
-### Galería de personajes
-
+### Galería de personajes - Modo oscuro
+![Galería modo oscuro](screenshots/galeria-oscuro.png)
 
 ### Chat - Modo claro
-
+![Chat modo claro](screenshots/chat-claro.png)
 
 ### Chat - Modo oscuro
-
+![Chat modo oscuro](screenshots/chat-oscuro.png)
 
 ### Vista mobile
-
+![Vista mobile](screenshots/celular.jpg)
 
 ## 🤖 Registro de uso de IA
 
@@ -118,8 +125,10 @@ Durante el desarrollo de este proyecto usé Claude (Anthropic) como asistente de
   - Pérdida del personaje activo al recargar la página (no se persistía `currentCharacterId`, solo los mensajes).
   - Contraste roto en modo oscuro: variables CSS reutilizadas con doble propósito (texto y fondo) se invertían juntas, dejando texto invisible sobre fondos del mismo tono.
 - **Migraciones de modelo de Gemini**: durante el desarrollo, `gemini-2.0-flash` fue dado de baja por Google; luego se migró de `gemini-2.5-flash` a `gemini-3.1-flash-lite` por límites de cuota gratuita, verificando cada cambio con búsquedas de documentación oficial actualizada antes de aplicarlo.
-- Error de sintaxis en `characters.js` (coma faltante entre objetos del diccionario de personajes) tras agregar el campo `image` a cada uno.
+- Conflicto entre `height` fijo y `min-height` en `#app`: al resolver el scroll roto de la galería, se rompió el layout de una sola pantalla que necesitaba `/chat`; se resolvió con una clase condicional (`app--fixed-height`) aplicada solo en esa ruta.
+  - Función `router()` duplicada y constante `routes` faltante tras un copy-paste incompleto, causando `SyntaxError` en el navegador.
 - **Decisiones propias**: la elección de los 8 personajes, sus personalidades específicas, y qué extras priorizar fueron decisiones mías; la IA ayudó a redactar los `system prompts` en base a los rasgos que definí para cada personaje.
+- **Mejoras de diseño con inspiración externa**: Se sumaron mejoras propias no pedidas por la consigna: colores de acento por personaje, selector rápido dentro del chat, panel de información del personaje, y un rediseño del Home con tema "portal multiversal" (carrusel + fondo animado), diseñado como concepto del multiverso de Marvel
 
 
 ## 👤 Autor
