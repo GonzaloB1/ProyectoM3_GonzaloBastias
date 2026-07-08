@@ -487,3 +487,17 @@ body {
 .hero__dot--active {
   background: white;
 }
+
+.view--not-found {
+  text-align: center;
+  padding: calc(var(--spacing-md) * 3) var(--spacing-md);
+}
+
+.view--not-found h2 {
+  margin-bottom: var(--spacing-sm);
+}
+
+.view--not-found p {
+  margin-bottom: var(--spacing-md);
+  opacity: 0.8;
+}

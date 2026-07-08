@@ -35,7 +35,7 @@ Proyecto 3. Single Page Application que permite chatear con 8 personajes fictici
 - Panel de información del personaje (franquicia y rasgos de personalidad)
 - Color de acento distinto por personaje (burbujas, botones, anillos del carrusel)
 - Home con hero animado y carrusel de personajes ("Portal de Personajes")
-
+- Normalización de rutas con `/` al final y manejo de rutas inexistentes con vista 404, sugerido por un profesor durante una clase — antes, cualquier ruta no reconocida caía silenciosamente al Home sin avisar al usuario.
 
 
 ## 🛠️ Stack técnico
@@ -128,7 +128,7 @@ Durante el desarrollo de este proyecto usé Claude (Anthropic) como asistente de
 - **Migraciones de modelo de Gemini**: durante el desarrollo, `gemini-2.0-flash` fue dado de baja por Google; luego se migró de `gemini-2.5-flash` a `gemini-3.1-flash-lite` por límites de cuota gratuita, verificando cada cambio con búsquedas de documentación oficial actualizada antes de aplicarlo.
 - Conflicto entre `height` fijo y `min-height` en `#app`: al resolver el scroll roto de la galería, se rompió el layout de una sola pantalla que necesitaba `/chat`; se resolvió con una clase condicional (`app--fixed-height`) aplicada solo en esa ruta.
   - Función `router()` duplicada y constante `routes` faltante tras un copy-paste incompleto, causando `SyntaxError` en el navegador.
-- **Decisiones propias**: la elección de los 8 personajes, sus personalidades específicas, y qué extras priorizar fueron decisiones mías; la IA ayudó a redactar los `system prompts` en base a los rasgos que definí para cada personaje.
+- - **Decisiones propias**: la elección de los 8 personajes, sus personalidades específicas, y qué extras priorizar fueron decisiones mías; la IA ayudó a redactar los `system prompts` en base a los rasgos que definí para cada personaje. También fue decisión propia que en pantallas de escritorio la aplicación se vea centrada con un ancho máximo (en vez de ocupar el 100% del ancho de la pantalla), buscando una experiencia más parecida a una app de chat tipo WhatsApp Web que a un sitio web tradicional de punta a punta.
 - **Mejoras de diseño con inspiración externa**: Se sumaron mejoras propias no pedidas por la consigna: colores de acento por personaje, selector rápido dentro del chat, panel de información del personaje, y un rediseño del Home con tema "portal multiversal" (carrusel + fondo animado), diseñado como concepto del multiverso de Marvel
 
 

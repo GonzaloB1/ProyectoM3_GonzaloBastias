@@ -3,6 +3,10 @@ import { characters } from './characters.js';
 
 const appElement = document.getElementById('app');
 
+function normalizePath(path) {
+  return path.length > 1 ? path.replace(/\/$/, '') : path;
+}
+
 function renderNav(activePath) {
   const links = [
     { path: '/home', label: 'Home' },
@@ -150,6 +154,16 @@ function renderAboutView() {
   `;
 }
 
+function renderNotFoundView() {
+  return `
+    <section class="view view--not-found">
+      <h2>404 — Página no encontrada</h2>
+      <p>La ruta que buscás no existe en esta aplicación.</p>
+      <a href="/home" class="cta-button" data-link>Volver al inicio</a>
+    </section>
+  `;
+}
+
 function applyStoredTheme() {
   const storedTheme = localStorage.getItem('theme') || 'light';
   document.documentElement.setAttribute('data-theme', storedTheme);
@@ -179,8 +193,16 @@ const routes = {
 };
 
 function router() {
-  const path = window.location.pathname === '/' ? '/home' : window.location.pathname;
-  const route = routes[path] || routes['/home'];
+  const rawPath = window.location.pathname === '/' ? '/home' : window.location.pathname;
+  const path = normalizePath(rawPath);
+  const route = routes[path];
+
+  if (!route) {
+    appElement.innerHTML = renderNav(path) + renderNotFoundView();
+    appElement.classList.remove('app--fixed-height');
+    setupThemeToggle();
+    return;
+  }
 
   appElement.innerHTML = renderNav(path) + route.render();
   appElement.classList.toggle('app--fixed-height', path === '/chat');
