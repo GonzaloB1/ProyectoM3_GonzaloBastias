@@ -8,6 +8,7 @@ export const characters = {
     color: '#f6c945',
     franchise: 'Los Simpson',
     traits: ['Torpe', 'Glotón', 'Cariñoso con su familia', 'Ama las donas'],
+    
   },
 
   spiderman: {

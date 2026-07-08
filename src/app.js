@@ -28,14 +28,82 @@ function renderNav(activePath) {
 
 function renderHomeView() {
   return `
-    <section class="view view--home">
-      <h1>Chateá con tu personaje favorito</h1>
-      <p>Elegí entre 8 personajes distintos y empezá una conversación potenciada por inteligencia artificial.</p>
-      <a href="/gallery" class="cta-button" data-link>Elegir personaje</a>
+    <section class="view view--home hero">
+      <div class="hero__intro">
+        <h1>Portal de Personajes</h1>
+        <p>Ocho universos, un solo chat. Elegí con quién cruzar.</p>
+      </div>
+
+      <div class="hero__carousel">
+        <button class="hero__arrow hero__arrow--prev" id="heroPrev" aria-label="Personaje anterior">‹</button>
+        <div class="hero__card" id="heroCard"></div>
+        <button class="hero__arrow hero__arrow--next" id="heroNext" aria-label="Personaje siguiente">›</button>
+      </div>
+
+      <div class="hero__dots" id="heroDots"></div>
     </section>
   `;
 }
 
+function initHomeView() {
+  const characterList = Object.values(characters);
+  let currentIndex = 0;
+
+  const card = document.getElementById('heroCard');
+  const dotsContainer = document.getElementById('heroDots');
+  const prevButton = document.getElementById('heroPrev');
+  const nextButton = document.getElementById('heroNext');
+
+  function renderCard() {
+    const character = characterList[currentIndex];
+
+    card.style.setProperty('--card-accent', character.color);
+    card.innerHTML = `
+      <div class="hero__portal" style="box-shadow: 0 0 0 4px ${character.color}, 0 0 40px ${character.color}">
+        <img src="${character.image}" alt="${character.name}" />
+      </div>
+      <h2>${character.name}</h2>
+      <span class="hero__franchise">${character.franchise}</span>
+      <p class="hero__quote">"${character.greeting}"</p>
+      <button class="cta-button" id="heroStartChat" style="background-color: ${character.color}">Empezar a chatear</button>
+    `;
+
+    document.getElementById('heroStartChat').addEventListener('click', () => {
+      setCurrentCharacter(character.id);
+      navigateTo('/chat');
+    });
+
+    dotsContainer.querySelectorAll('.hero__dot').forEach((dot, index) => {
+      dot.classList.toggle('hero__dot--active', index === currentIndex);
+    });
+  }
+
+  function renderDots() {
+    dotsContainer.innerHTML = characterList
+      .map((_, index) => `<button class="hero__dot" data-index="${index}"></button>`)
+      .join('');
+
+    dotsContainer.querySelectorAll('.hero__dot').forEach((dot) => {
+      dot.addEventListener('click', () => {
+        currentIndex = Number(dot.getAttribute('data-index'));
+        renderCard();
+      });
+    });
+  }
+
+  prevButton.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + characterList.length) % characterList.length;
+    renderCard();
+  });
+
+  nextButton.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % characterList.length;
+    renderCard();
+  });
+
+  renderDots();
+  renderCard();
+}
 function renderGalleryView() {
   const cardsHtml = Object.values(characters)
     .map(
@@ -104,7 +172,7 @@ function setupThemeToggle() {
 }
 
 const routes = {
-  '/home': { render: renderHomeView },
+  '/home': { render: renderHomeView, init: initHomeView },
   '/gallery': { render: renderGalleryView, init: initGalleryView },
   '/chat': { render: renderChatView, init: initChatView },
   '/about': { render: renderAboutView },
